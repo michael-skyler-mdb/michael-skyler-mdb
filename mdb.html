@@ -10,27 +10,49 @@
 </head>
 <body>
 
-<div id="movie-list"></div>
-<div id="form">
+<div id="movie-list"><div class="loader"></div></div>
+<div id="add-form">
+    <h3>Add Movie</h3>
     <input type="text" id="newMovieTitle">
     <label>
-        <input type="radio" id="1" name="rating" value="1">1
+        <input type="radio" name="rating" value="1">1
     </label>
     <label>
-        <input type="radio" id="2" name="rating" value="2">2
+        <input type="radio" name="rating" value="2">2
     </label>
     <label>
-        <input type="radio" id="3" name="rating" value="3">3
+        <input type="radio" name="rating" value="3">3
     </label>
     <label>
-        <input type="radio" id="4" name="rating" value="4">4
+        <input type="radio" name="rating" value="4">4
     </label>
     <label>
-        <input type="radio" id="5" name="rating" value="5">5
+        <input type="radio" name="rating" value="5">5
     </label>
     <button id="addMovie">Submit</button>
 </div>
-<!--<div class="loader"></div>-->
+<hr>
+<div id="edit-form">
+    <h3>Edit Movie</h3>
+    <input type="text" id="editMovieTitle">
+    <label>
+        <input type="radio" name="rating" value="1" checked>1
+    </label>
+    <label>
+        <input type="radio" name="rating" value="2">2
+    </label>
+    <label>
+        <input type="radio" name="rating" value="3">3
+    </label>
+    <label>
+        <input type="radio" name="rating" value="4">4
+    </label>
+    <label>
+        <input type="radio"name="rating" value="5">5
+    </label>
+    <button id="editMovie">Submit</button>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

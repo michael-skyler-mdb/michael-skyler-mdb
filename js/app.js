@@ -14,10 +14,11 @@ function movieFetch () {
     //     .catch( error => console.error(error) ); /* handle errors */
     fetch(url).then(response => response.json())
         .then( data => {
+            $("#movie-list").empty();
             let list = ""
             for (let item of data){
-                list +=  `<h5>${item.title}</h5>
-                            <div>Rating ${item.rating}</div><hr>`
+                list +=  `<div class="movie-container" id="${item.id}"><h5>${item.title}</h5>
+                            <div>Rating ${item.rating}</div><br><button class="edit">Edit</button><button class="delete">Delete</button></div><hr>`
             }
             $("#movie-list").append(list);
         })
@@ -55,12 +56,32 @@ function addMovieFunction () {
         .catch(error => console.error(error)); /* handle errors */
 };
 
+function moviePatch (patchID) {
+
+    const reviewObj = {
+        id: newMovieID,
+        title: newTitle,
+        rating: newRating,
+        // comments: "This is a really good place for coding and eating"
+    };
+
+    const options = {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewObj),
+    };
+    fetch(`url/${patchID}`, options)
+        .then(response => console.log(response)) /* review was created successfully */
+        .catch(error => console.error(error)); /* handle errors */
+}
+
 $(document).ready(function() {
     movieFetch();
 });
 $("#addMovie").click(() => {
     addMovieFunction();
-    $("#movie-list").empty();
     movieFetch();
     console.log("Success");
 });
