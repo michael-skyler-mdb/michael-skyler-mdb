@@ -1,5 +1,4 @@
 const url = 'https://fabulous-difficult-redcurrant.glitch.me/movies';
-const movieDB = fetch(url).then(response => response.json());
 
 function movieFetch () {
     // const url = `${url}movies`;
@@ -13,7 +12,7 @@ function movieFetch () {
     // fetch(url, options)
     //     .then( response => console.log(response) ) /* review was created successfully */
     //     .catch( error => console.error(error) ); /* handle errors */
-    movieDB
+    fetch(url).then(response => response.json())
         .then( data => {
             let list = ""
             for (let item of data){
@@ -26,17 +25,21 @@ function movieFetch () {
 }
 
 
-function addMovie () {
-    let newMovieID = movieDB.then(data => data.reduce((total,movie) => {
+function addMovieFunction () {
+    let newMovieID;
+    fetch(url).then(response => response.json()).then(data => data.reduce((total,movie) => {
         if(movie.id + 1 > total){
             return movie.id + 1;
         };
-        return total;
+        console.log(data);
+        return  newMovieID = total;
     },0))
+    let newTitle = $("#newMovieTitle").val();
+    let newRating = $('input[name="rating"]:checked').val();
     const reviewObj = {
         id: newMovieID,
-        title: 'Codey',
-        rating: 5,
+        title: newTitle,
+        rating: newRating,
         // comments: "This is a really good place for coding and eating"
     };
 
@@ -54,4 +57,10 @@ function addMovie () {
 
 $(document).ready(function() {
     movieFetch();
+});
+$("#addMovie").click(() => {
+    addMovieFunction();
+    $("#movie-list").empty();
+    movieFetch();
+    console.log("Success");
 });
