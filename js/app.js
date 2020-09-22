@@ -72,7 +72,19 @@ function moviePatch (patchID) {
         },
         body: JSON.stringify(reviewObj),
     };
-    fetch(`url/${patchID}`, options)
+    fetch(`${url}/${patchID}`, options)
+        .then(response => console.log(response)) /* review was created successfully */
+        .catch(error => console.error(error)); /* handle errors */
+}
+
+function movieDelete (id) {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    fetch(`${url}/${id}`, options)
         .then(response => console.log(response)) /* review was created successfully */
         .catch(error => console.error(error)); /* handle errors */
 }
@@ -80,8 +92,18 @@ function moviePatch (patchID) {
 $(document).ready(function() {
     movieFetch();
 });
+
 $("#addMovie").click(() => {
     addMovieFunction();
     movieFetch();
     console.log("Success");
 });
+
+$(document).on("click", ".delete", () => {
+    console.log("delete initiated");
+    let deleteID = $(this).parent().attr("id");
+    movieDelete(deleteID);
+    movieFetch();
+    console.log("Deleted");
+})
+
