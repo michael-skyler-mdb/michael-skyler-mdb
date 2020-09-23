@@ -6,9 +6,10 @@ function movieFetch () {
             $("#movie-list").empty();
             let list = ""
             for (let item of data){
+                let rating = item.rating;
                 list +=  `<div class="movie-container" id="${item.id}">
                             <h5>${item.title}</h5>
-                            <div>${item.rating}</div><br>
+                            <div>${rating}</div><br>
                             <button class="btn btn-primary edit" type="button" data-toggle="collapse" data-target="#editForm${item.id}" aria-expanded="false" aria-controls="collapseExample">Edit Rating</button>
                             <button class="btn btn-danger delete">Delete</button>
                             <div class="collapse" id="editForm${item.id}">
@@ -33,8 +34,9 @@ function movieFetch () {
                             </div>
                             </div>
                            </div>
-                            </div>`
-            }
+                            </div>`;
+                // $(`input:nth-child(${rating})`);
+            };
             $("#movie-list").append(list);
         })
         .catch(error => console.error(error));
