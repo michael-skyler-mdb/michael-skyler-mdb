@@ -17,8 +17,34 @@ function movieFetch () {
             $("#movie-list").empty();
             let list = ""
             for (let item of data){
-                list +=  `<div class="movie-container" id="${item.id}"><h5>${item.title}</h5>
-                            <div>${item.rating}</div><br><button class="edit">Edit</button><button class="delete">Delete</button></div><hr>`
+                list +=  `<div class="movie-container" id="${item.id}">
+                            <h5>${item.title}</h5>
+                            <div>${item.rating}</div><br>
+                            <button class="btn btn-primary edit" type="button" data-toggle="collapse" data-target="#editForm${item.id}" aria-expanded="false" aria-controls="collapseExample">Edit</button>
+                            <button class="btn btn-danger delete">Delete</button></div>
+                            <div class="collapse" id="editForm${item.id}">
+                            <div class="card card-body">
+                                <div id="edit-form">
+                            <input type="text" id="editMovieTitle${item.id}" value="${item.title}">
+                            <label>
+                                <input type="radio" name="editRating${item.id}" value="1" checked>1
+                            </label>
+                            <label>
+                                <input type="radio" name="editRating${item.id}" value="2">2
+                            </label>
+                            <label>
+                                <input type="radio" name="editRating${item.id}" value="3">3
+                            </label>
+                            <label>
+                                <input type="radio" name="editRating${item.id}" value="4">4
+                            </label>
+                            <label>
+                                <input type="radio"name="editRating${item.id}" value="5">5
+                            </label>
+                            <button class="btn btn-success" id="editMovie${item.id}">Submit</button>
+                            </div>
+                            </div>
+                           </div><hr>`
             }
             $("#movie-list").append(list);
         })
