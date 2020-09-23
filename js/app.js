@@ -52,16 +52,18 @@ function addMovieFunction () {
         body: JSON.stringify(reviewObj),
     };
     fetch(url, options)
-        .then(response => console.log(response)) /* review was created successfully */
+        .then(response => console.log(response))
+        .then(movieFetch)/* review was created successfully */
         .catch(error => console.error(error)); /* handle errors */
 };
 
 function moviePatch (patchID) {
-
+    let editTitle = $("#editMovieTitle").val();
+    let editRating = $('input[name="editRating"]:checked').val();
     const reviewObj = {
-        id: newMovieID,
-        title: newTitle,
-        rating: newRating,
+        id: patchID,
+        title: editTitle,
+        rating: editRating,
         // comments: "This is a really good place for coding and eating"
     };
 
@@ -73,14 +75,15 @@ function moviePatch (patchID) {
         body: JSON.stringify(reviewObj),
     };
     fetch(`${url}/${patchID}`, options)
-        .then(response => console.log(response)) /* review was created successfully */
+        .then(response => console.log(response))
+        .then(movieFetch)/* review was created successfully */
         .catch(error => console.error(error)); /* handle errors */
 }
 
 const movieDelete = (id) => {
-    fetch(url, {
+    fetch(`${url}/${id}`, {
         method: "DELETE"
-    })
+    }).then(movieFetch);
 }
 
 $(document).ready(function() {
@@ -88,17 +91,24 @@ $(document).ready(function() {
 });
 
 $("#addMovie").click(() => {
-    addMovieFunction();
-    movieFetch();
-    console.log("Success");
+    if($("#newMovieTitle").val().trim().length > 0) {
+        addMovieFunction();
+    } else {
+        alert("Hey, Can't do that!")
+    }
 });
 
-$(document).on("click", ".delete", () => {
-    console.log("delete initiated");
+$("#editMovie").click(() => {
+    let editID = $(this).parent().attr('id');
+    if($("#editMovieTitle").val().trim().length > 0) {
+        moviePatch(editID);
+    } else {
+        alert("Hey, Can't do that!")
+    }
+});
+
+$(document).on("click", ".delete", function(){
     let deleteID = $(this).parent().attr('id');
-    console.log(deleteID);
     movieDelete(deleteID);
-    movieFetch();
-    console.log("Deleted");
 })
 
