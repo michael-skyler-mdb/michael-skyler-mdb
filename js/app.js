@@ -18,7 +18,7 @@ function movieFetch () {
             let list = ""
             for (let item of data){
                 list +=  `<div class="movie-container" id="${item.id}"><h5>${item.title}</h5>
-                            <div>Rating ${item.rating}</div><br><button class="edit">Edit</button><button class="delete">Delete</button></div><hr>`
+                            <div>${item.rating}</div><br><button class="edit">Edit</button><button class="delete">Delete</button></div><hr>`
             }
             $("#movie-list").append(list);
         })
@@ -77,16 +77,10 @@ function moviePatch (patchID) {
         .catch(error => console.error(error)); /* handle errors */
 }
 
-function movieDelete (id) {
-    const options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-    fetch(`${url}/${id}`, options)
-        .then(response => console.log(response)) /* review was created successfully */
-        .catch(error => console.error(error)); /* handle errors */
+const movieDelete = (id) => {
+    fetch(url, {
+        method: "DELETE"
+    })
 }
 
 $(document).ready(function() {
@@ -101,7 +95,8 @@ $("#addMovie").click(() => {
 
 $(document).on("click", ".delete", () => {
     console.log("delete initiated");
-    let deleteID = $(this).parent().attr("id");
+    let deleteID = $(this).parent().attr('id');
+    console.log(deleteID);
     movieDelete(deleteID);
     movieFetch();
     console.log("Deleted");
