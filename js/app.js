@@ -1,17 +1,6 @@
 const url = 'https://fabulous-difficult-redcurrant.glitch.me/movies';
 
 function movieFetch () {
-    // const url = `${url}movies`;
-    // const options = {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(reviewObj),
-    // };
-    // fetch(url, options)
-    //     .then( response => console.log(response) ) /* review was created successfully */
-    //     .catch( error => console.error(error) ); /* handle errors */
     fetch(url).then(response => response.json())
         .then( data => {
             $("#movie-list").empty();
@@ -20,12 +9,11 @@ function movieFetch () {
                 list +=  `<div class="movie-container" id="${item.id}">
                             <h5>${item.title}</h5>
                             <div>${item.rating}</div><br>
-                            <button class="btn btn-primary edit" type="button" data-toggle="collapse" data-target="#editForm${item.id}" aria-expanded="false" aria-controls="collapseExample">Edit</button>
-                            <button class="btn btn-danger delete">Delete</button></div>
+                            <button class="btn btn-primary edit" type="button" data-toggle="collapse" data-target="#editForm${item.id}" aria-expanded="false" aria-controls="collapseExample">Edit Rating</button>
+                            <button class="btn btn-danger delete">Delete</button>
                             <div class="collapse" id="editForm${item.id}">
                             <div class="card card-body">
                                 <div id="edit-form">
-                            <input type="text" id="editMovieTitle${item.id}" value="${item.title}">
                             <label>
                                 <input type="radio" name="editRating${item.id}" value="1" checked>1
                             </label>
@@ -41,10 +29,11 @@ function movieFetch () {
                             <label>
                                 <input type="radio"name="editRating${item.id}" value="5">5
                             </label>
-                            <button class="btn btn-success" id="editMovie${item.id}">Submit</button>
+                            <button class="btn btn-success submit-edit" id="editMovie${item.id}">Submit</button>
                             </div>
                             </div>
-                           </div><hr>`
+                           </div>
+                            </div>`
             }
             $("#movie-list").append(list);
         })
@@ -83,14 +72,9 @@ function addMovieFunction () {
         .catch(error => console.error(error)); /* handle errors */
 };
 
-function moviePatch (patchID) {
-    let editTitle = $("#editMovieTitle").val();
-    let editRating = $('input[name="editRating"]:checked').val();
+function moviePatch (patchID, editRating) {
     const reviewObj = {
-        id: patchID,
-        title: editTitle,
-        rating: editRating,
-        // comments: "This is a really good place for coding and eating"
+        rating: editRating
     };
 
     const options = {
@@ -102,7 +86,7 @@ function moviePatch (patchID) {
     };
     fetch(`${url}/${patchID}`, options)
         .then(response => console.log(response))
-        .then(movieFetch)/* review was created successfully */
+        .then(movieFetch)/* edit was created successfully */
         .catch(error => console.error(error)); /* handle errors */
 }
 
@@ -124,13 +108,13 @@ $("#addMovie").click(() => {
     }
 });
 
-$("#editMovie").click(() => {
-    let editID = $(this).parent().attr('id');
-    if($("#editMovieTitle").val().trim().length > 0) {
-        moviePatch(editID);
-    } else {
-        alert("Hey, Can't do that!")
-    }
+$(document).on("click", ".submit-edit", function(){
+    let editID = $(this).parent().parent().parent().attr('id');
+    editID = editID.substring(8);
+    console.log(editID);
+    let editRating = $(`input[name="editRating${editID}"]:checked`).val();
+    console.log(editRating)
+    moviePatch(editID, editRating);
 });
 
 $(document).on("click", ".delete", function(){
