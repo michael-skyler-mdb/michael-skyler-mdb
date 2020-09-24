@@ -58,3 +58,12 @@ body {
         height : 0;
     }
 }
+
+.movie-card {
+    width: auto!important;
+}
+
+.poster {
+    width: 300px;
+    height: 445px;
+}

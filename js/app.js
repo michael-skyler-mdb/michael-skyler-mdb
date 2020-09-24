@@ -41,10 +41,10 @@ function movieFetch () {
             let list = ""
             for (let item of data){
                 let rating = item.rating;
-                list +=  `<div class="movie-container" id="${item.id}">
-                            <h4>${item.title}</h4>
-                            <img src="${item.poster}">
-                            <div class="movieRating">Your rating is 
+                list +=  `<div class="card movie-card col-12 col-md-4 mb-2 mx-2" id="${item.id}">
+                            <img src="${item.poster}" class="poster mx-auto card-img-top">
+                            <h4 class="mx-auto">${item.title}</h4>
+                            <div class="movieRating mx-auto">Your rating is 
                                 <span class="rating">${rating}</span>
                                 ⭐️ out of 5⭐️ 
                             </div>
@@ -101,7 +101,12 @@ function modalFill (movieID) {
         .then( data => {
             $("#info-modal-body").html("<div class=\"loader\"></div>");
             let list = "";
-                list +=  `<h4 class="text-center mb-2"><strong>${data.title}</strong></h4>
+                list +=  `<div class="modal-header">
+                        <h4 class="modal-title text-center" id="infoTitle"><strong>${data.title}</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                           <div><strong>Director:</strong> ${data.director}</div>
                           <div><em>${data.plot}</em></div>
                           <div><strong>Genre:</strong> ${data.genre}</div>

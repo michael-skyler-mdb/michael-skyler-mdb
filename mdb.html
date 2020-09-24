@@ -11,7 +11,7 @@
 <body>
 
 <h2 class="bg-primary display-4 text-white">Movie Project</h2>
-<div class="container">
+<div class="container-fluid">
     <h3 class="mt-4 mb-3">Filter Movies</h3>
     <h5>Title:</h5>
     <h5>Genre:</h5>
@@ -70,7 +70,7 @@
     </div>
     <hr>
 
-    <div id="movie-list"><div class="loader"></div></div>
+    <div id="movie-list" class="row justify-content-around card-deck"><div class="loader"></div></div>
 
     <!--  More Info Modal  -->
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -81,8 +81,6 @@
             </div>
         </div>
     </div>
-
-
 
     <!--  Edit Movie Modal  -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
