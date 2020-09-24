@@ -1,6 +1,6 @@
 const url = 'https://fabulous-difficult-redcurrant.glitch.me/movies';
 const omdb = `http://www.omdbapi.com/?apikey=${MDBKey}&`
-let IDToEdit;
+let thisID;
 let rating;
 
 const starterMovies = ['Nausicaä of the Valley of the Wind ', 'Blade Runner', 'Spaceballs', 'Rubber']
@@ -49,6 +49,7 @@ function movieFetch () {
                                 ⭐️ out of 5⭐️ 
                             </div>
                             <br>
+                            <button class="btn btn-info info" type="button" data-toggle="modal" data-target="#infoModal">More Info</button>
                             <button class="btn btn-primary edit" type="button" data-toggle="modal" data-target="#editModal">Edit Rating</button>
                             <button class="btn btn-danger delete">Delete</button>
                             <hr>
@@ -95,6 +96,24 @@ function addMovieFunction (movie) {
 
 };
 
+function modalFill (movieID) {
+    fetch(`${url}/${movieID}`).then(response => response.json())
+        .then( data => {
+            $("#info-modal-body").html("<div class=\"loader\"></div>");
+            let list = "";
+                list +=  `<h4 class="text-center mb-2"><strong>${data.title}</strong></h4>
+                          <div><strong>Director:</strong> ${data.director}</div>
+                          <div><em>${data.plot}</em></div>
+                          <div><strong>Genre:</strong> ${data.genre}</div>
+                          <div><strong>Rated:</strong> ${data.rated}</div>
+                          <div><strong>Release Date: </strong>${data.year}</div>
+                          <div><strong>Runtime:</strong> ${data.runtime}</div>
+                          <div><strong>Awards:</strong> ${data.awards}</div>`;
+            $("#info-modal-body").empty().append(list);
+        })
+        .catch(error => console.error(error));
+};
+
 function moviePatch (editRating) {
     const reviewObj = {
         rating: editRating
@@ -107,7 +126,7 @@ function moviePatch (editRating) {
         },
         body: JSON.stringify(reviewObj),
     };
-    fetch(`${url}/${IDToEdit}`, options)
+    fetch(`${url}/${thisID}`, options)
         .then(response => console.log(response))
         .then(movieFetch)/* edit was created successfully */
         .catch(error => console.error(error)); /* handle errors */
@@ -140,12 +159,17 @@ $("#addMovie").click(() => {
     };
 });
 
+$(document).on("click", ".info", function() {
+    thisID = $(this).parent().attr('id');
+    modalFill(thisID)
+});
+
 $(document).on("click", ".edit", function() {
-    IDToEdit = $(this).parent().attr('id');
+    thisID = $(this).parent().attr('id');
     let currentRating = $(this).parent().find('.rating').html();
     console.log(currentRating);
     $(`input[name='editRating'][value=${currentRating}]`).prop('checked', true);
-    console.log(IDToEdit);
+    console.log(thisID);
 });
 
 $(document).on("click", ".submit-edit", function(){
