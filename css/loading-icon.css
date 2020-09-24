@@ -16,7 +16,7 @@ body {
 }
 .loader:before {
     content: '';
-    postion: absolute;
+    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
