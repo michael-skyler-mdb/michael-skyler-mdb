@@ -1,5 +1,6 @@
 const url = 'https://fabulous-difficult-redcurrant.glitch.me/movies';
 let IDToEdit;
+let newRating;
 
 function movieFetch () {
     fetch(url).then(response => response.json())
@@ -10,17 +11,16 @@ function movieFetch () {
                 let rating = item.rating;
                 list +=  `<div class="movie-container" id="${item.id}">
                             <h4>${item.title}</h4>
-                            <div>${rating}</div><br>
+                            <div class="movieRating">${rating}</div><br>
                             <button class="btn btn-primary edit" type="button" data-toggle="modal" data-target="#editModal">Edit Rating</button>
                             <button class="btn btn-danger delete">Delete</button>
                             <hr>
                             </div>`;
-                // $(`input:nth-child(${rating})`);
             };
             $("#movie-list").append(list);
         })
         .catch(error => console.error(error));
-}
+};
 
 
 function addMovieFunction () {
@@ -70,17 +70,21 @@ function moviePatch (editRating) {
         .then(response => console.log(response))
         .then(movieFetch)/* edit was created successfully */
         .catch(error => console.error(error)); /* handle errors */
-}
+};
 
 const movieDelete = (id) => {
     fetch(`${url}/${id}`, {
         method: "DELETE"
     }).then(movieFetch);
-}
+};
 
 $(document).ready(function() {
     movieFetch();
 });
+
+$("#addMovieButton").click(() => {
+    $('#newMovieTitle').val("");
+})
 
 $("#addMovie").click(() => {
     if($("#newMovieTitle").val().trim().length > 0) {
@@ -92,6 +96,9 @@ $("#addMovie").click(() => {
 
 $(document).on("click", ".edit", function() {
     IDToEdit = $(this).parent().attr('id');
+    let currentRating = $(this).parent().children().first().next().html()
+    console.log(currentRating);
+    $(`input[name='editRating'][value=${currentRating}]`).prop('checked', true);
     console.log(IDToEdit);
 });
 
@@ -99,10 +106,11 @@ $(document).on("click", ".submit-edit", function(){
     let editRating = $(`input[name="editRating"]:checked`).val();
     console.log(editRating)
     moviePatch(editRating);
+    $('#newMovieTitle').empty();
 });
 
 $(document).on("click", ".delete", function(){
     let deleteID = $(this).parent().attr('id');
     movieDelete(deleteID);
-})
+});
 
