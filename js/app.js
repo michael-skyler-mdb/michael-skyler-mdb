@@ -41,18 +41,17 @@ function movieFetch () {
             let list = ""
             for (let item of data){
                 let rating = item.rating;
-                list +=  `<div class="card movie-card col-12 col-md-4 mb-2 mx-2" id="${item.id}">
+                list +=  `<div class="card movie-card mb-4 mx-2" id="${item.id}">
                             <img src="${item.poster}" class="poster mx-auto card-img-top">
-                            <h4 class="mx-auto">${item.title}</h4>
+                            <h4 class="text-center">${item.title}</h4>
                             <div class="movieRating mx-auto">Your rating is 
                                 <span class="rating">${rating}</span>
                                 ⭐️ out of 5⭐️ 
                             </div>
                             <br>
-                            <button class="btn btn-info info" type="button" data-toggle="modal" data-target="#infoModal">More Info</button>
-                            <button class="btn btn-primary edit" type="button" data-toggle="modal" data-target="#editModal">Edit Rating</button>
-                            <button class="btn btn-danger delete">Delete</button>
-                            <hr>
+                            <button class="btn btn-info info mb-1" type="button" data-toggle="modal" data-target="#infoModal">More Info</button>
+                            <button class="btn btn-primary edit mb-1" type="button" data-toggle="modal" data-target="#editModal">Edit Rating</button>
+                            <button class="btn btn-danger delete mb-1">Delete</button>
                             </div>`;
             };
             $("#movie-list").append(list);
@@ -77,7 +76,7 @@ function addMovieFunction (movie) {
             runtime: movie.Runtime,
             awards: movie.Awards,
             plot: movie.Plot,
-            ratings: movie.Ratings
+            reviews: movie.Ratings
         };
 
         const options = {
@@ -107,10 +106,9 @@ function modalFill (movieID) {
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                          <div><strong>Director:</strong> ${data.director}</div>
                           <div><em>${data.plot}</em></div>
+                          <div><strong>Director:</strong> ${data.director}</div>
                           <div><strong>Genre:</strong> ${data.genre}</div>
-                          <div><strong>Rated:</strong> ${data.rated}</div>
                           <div><strong>Release Date: </strong>${data.year}</div>
                           <div><strong>Runtime:</strong> ${data.runtime}</div>
                           <div><strong>Awards:</strong> ${data.awards}</div>`;
@@ -185,7 +183,10 @@ $(document).on("click", ".submit-edit", function(){
 });
 
 $(document).on("click", ".delete", function(){
-    let deleteID = $(this).parent().attr('id');
-    movieDelete(deleteID);
+    let response = confirm("Are you sure want to?");
+    if (response) {
+        let deleteID = $(this).parent().attr('id');
+        movieDelete(deleteID);
+    }
 });
 

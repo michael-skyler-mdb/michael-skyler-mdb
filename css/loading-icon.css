@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    background: #142F39;
 }
 
 .loader {
@@ -59,11 +60,22 @@ body {
     }
 }
 
+h2 {
+    font-family: 'Montserrat Subrayada', sans-serif;
+}
+
 .movie-card {
-    width: auto!important;
+    width: 310px;
+    background-color: #466373;
+    color: white;
+    border: 5px solid white;
+}
+
+.movie-card h4 {
+    height: 56px;
 }
 
 .poster {
-    width: 300px;
+    width: 290px;
     height: 445px;
 }
