@@ -60,9 +60,11 @@ body {
     }
 }
 
-h2 {
-    font-family: 'Montserrat Subrayada', sans-serif;
+#title {
+    font-family: 'Montserrat Subrayada', sans-serif!important;
 }
+
+
 
 .movie-card {
     width: 310px;

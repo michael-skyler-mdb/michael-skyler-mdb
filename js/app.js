@@ -1,47 +1,29 @@
 const url = 'https://fabulous-difficult-redcurrant.glitch.me/movies';
 const omdb = `http://www.omdbapi.com/?apikey=${MDBKey}&`
 let thisID;
-let rating;
-
-const starterMovies = ['Nausicaä of the Valley of the Wind ', 'Blade Runner', 'Spaceballs', 'Rubber']
-// const omdbFetch = (movie) => fetch(omdb).then(response => response.json());
-
-function movieEntry(movieTitle) {
-        fetch(`${omdb}t=${movieTitle}`).then(response => response.json()).then(data => {
-            console.log(data);
-            return data;
-        });
-}
-
-function omdbMovieFunction (movie) {
-    const reviewObj = {
-        title: movie.Title,
-        rating: '',
-        genre: movie.Genre,
-        poster: movie.Poster,
-    };
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reviewObj),
-    };
-    fetch(url, options)
-        .then(response => console.log(response))
-        .then(movieFetch)/* review was created successfully */
-        .catch(error => console.error(error)); /* handle errors */
-};
+let movieArray = [];
+let displayArray = [];
 
 function movieFetch () {
     fetch(url).then(response => response.json())
         .then( data => {
-            $("#movie-list").empty();
-            let list = ""
-            for (let item of data){
-                let rating = item.rating;
-                list +=  `<div class="card movie-card mb-4 mx-2" id="${item.id}">
+            movieArray = [];
+            for (let item of data) {
+                movieArray.push(item);
+            }
+            console.log(movieArray);
+            displayArray = movieArray;
+            movieRender();
+        })
+        .catch(error => console.error(error));
+};
+
+function movieRender () {
+    $("#movie-list").empty();
+    let list = ""
+    for (let item of displayArray){
+        let rating = item.rating;
+        list +=  `<div class="card movie-card mb-4 mx-2" id="${item.id}">
                             <img src="${item.poster}" class="poster mx-auto card-img-top">
                             <h4 class="text-center">${item.title}</h4>
                             <div class="movieRating mx-auto">Your rating is 
@@ -53,11 +35,9 @@ function movieFetch () {
                             <button class="btn btn-primary edit mb-1" type="button" data-toggle="modal" data-target="#editModal">Edit Rating</button>
                             <button class="btn btn-danger delete mb-1">Delete</button>
                             </div>`;
-            };
-            $("#movie-list").append(list);
-        })
-        .catch(error => console.error(error));
-};
+    };
+    $("#movie-list").append(list);
+}
 
 function addMovieFunction (movie) {
     let newTitle = $("#newMovieTitle").val();
@@ -93,6 +73,23 @@ function addMovieFunction (movie) {
 
     });
 
+};
+
+function displayUpdate () {
+    displayArray = [];
+    for (let movie of movieArray) {
+        let title = $('#titleSelect').val();
+        let genre = $('#genreSelect').val();
+        let movieRating = parseInt($('#ratingSelect').val());
+        console.log(movieRating)
+        // if (movie.title.includes(title) && (movie.genre.includes(genre) || $('#genreSelect').val() === "default")) {
+        //     displayArray.push(movie);
+        // }
+        if (movie.title.includes(title) && (movie.genre.includes(genre) || $('#genreSelect').val() === "default") && parseInt(movie.rating) >= movieRating ) {
+            displayArray.push(movie);
+        }
+    }
+    movieRender();
 };
 
 function modalFill (movieID) {
@@ -146,6 +143,8 @@ $(document).ready(function() {
         movieFetch();
     },2500);
 
+    console.log($('#genreSelect').val())
+    console.log($('#ratingSelect').val())
 });
 
 $("#addMovieButton").click(() => {
@@ -160,6 +159,14 @@ $("#addMovie").click(() => {
     } else {
         alert("Hey, Can't do that!")
     };
+});
+
+$('#titleSelect').keyup(function () {
+    displayUpdate();
+});
+
+$('#genreSelect, #ratingSelect').change(function () {
+    displayUpdate();
 });
 
 $(document).on("click", ".info", function() {
