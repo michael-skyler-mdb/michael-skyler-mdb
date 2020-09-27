@@ -156,6 +156,8 @@ $("#addMovie").click(() => {
     if($("#newMovieTitle").val().trim().length > 0) {
         // let entry = movieEntry($("#newMovieTitle").val().trim());
         addMovieFunction();
+        $("#ratingSelect").val('default');
+        $("#genreSelect").val('default');
 
     } else {
         alert("Hey, Can't do that!")
@@ -188,6 +190,8 @@ $(document).on("click", ".submit-edit", function(){
     console.log(editRating)
     moviePatch(editRating);
     $('#newMovieTitle').empty();
+    $("#ratingSelect").val('default');
+    $("#genreSelect").val('default');
 });
 
 $(document).on("click", ".delete", function(){
@@ -195,6 +199,8 @@ $(document).on("click", ".delete", function(){
     if (response) {
         let deleteID = $(this).parent().attr('id');
         movieDelete(deleteID);
+        $("#ratingSelect").val('default');
+        $("#genreSelect").val('default');
     }
 });
 
