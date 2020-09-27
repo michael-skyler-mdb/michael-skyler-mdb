@@ -1,9 +1,10 @@
 const url = 'https://fabulous-difficult-redcurrant.glitch.me/movies';
 const omdb = `http://www.omdbapi.com/?apikey=${MDBKey}&`
 let thisID;
-let movieArray = [];
-let displayArray = [];
+let movieArray = [];//Array of movies in our database
+let displayArray = [];//Array of movies currently being displayed
 
+//Fethces are local list of Movies
 function movieFetch () {
     fetch(url).then(response => response.json())
         .then( data => {
@@ -18,6 +19,7 @@ function movieFetch () {
         .catch(error => console.error(error));
 };
 
+//Creates Cards of Local Movies List
 function movieRender () {
     $("#movie-list").empty();
     let list = ""
@@ -38,7 +40,7 @@ function movieRender () {
     };
     $("#movie-list").append(list);
 }
-
+//Takes input from user to add a movie
 function addMovieFunction (movie) {
     let newTitle = $("#newMovieTitle").val();
     let newRating = $('input[name="rating"]:checked').val();
@@ -74,7 +76,7 @@ function addMovieFunction (movie) {
     });
 
 };
-
+//When user filters based on criteria, display will update
 function displayUpdate () {
     displayArray = [];
     for (let movie of movieArray) {
@@ -92,7 +94,7 @@ function displayUpdate () {
     }
     movieRender();
 };
-
+//Populates More Info Modal
 function modalFill (movieID) {
     fetch(`${url}/${movieID}`).then(response => response.json())
         .then( data => {
@@ -114,7 +116,7 @@ function modalFill (movieID) {
         })
         .catch(error => console.error(error));
 };
-
+//Allows user to changes their personal rating
 function moviePatch (editRating) {
     const reviewObj = {
         rating: editRating
@@ -132,13 +134,13 @@ function moviePatch (editRating) {
         .then(movieFetch)/* edit was created successfully */
         .catch(error => console.error(error)); /* handle errors */
 };
-
+//Allows user to delete movie from local list
 const movieDelete = (id) => {
     fetch(`${url}/${id}`, {
         method: "DELETE"
     }).then(movieFetch);
 };
-
+//Allows loading to appear and then populate movie cards
 $(document).ready(function() {
     setTimeout(function () {
         movieFetch();
@@ -147,14 +149,13 @@ $(document).ready(function() {
     console.log($('#genreSelect').val())
     console.log($('#ratingSelect').val())
 });
-
+//Opens Add Movie Modal
 $("#addMovieButton").click(() => {
     $('#newMovieTitle').val("");
 })
-
+//Submission of added movie
 $("#addMovie").click(() => {
     if($("#newMovieTitle").val().trim().length > 0) {
-        // let entry = movieEntry($("#newMovieTitle").val().trim());
         addMovieFunction();
         $("#ratingSelect").val('default');
         $("#genreSelect").val('default');
@@ -163,20 +164,26 @@ $("#addMovie").click(() => {
         alert("Hey, Can't do that!")
     };
 });
-
-$('#titleSelect').keyup(function () {
+//Allows user to filter local list based on title
+$('#titleSelect').keyup(function (event) {
     displayUpdate();
 });
-
+//Prevents return key from refreshing Page
+$("#filterForm").keydown(function (event) {
+    if(event.keyCode == 13){
+        event.preventDefault();
+    }
+})
+//Allows user to filter based on genre and rating
 $('#genreSelect, #ratingSelect').change(function () {
     displayUpdate();
 });
-
+//Triggers info modal for specific movie on click
 $(document).on("click", ".info", function() {
     thisID = $(this).parent().attr('id');
     modalFill(thisID)
 });
-
+//Triggers edit modal for specific movie on click
 $(document).on("click", ".edit", function() {
     thisID = $(this).parent().attr('id');
     let currentRating = $(this).parent().find('.rating').html();
@@ -184,7 +191,7 @@ $(document).on("click", ".edit", function() {
     $(`input[name='editRating'][value=${currentRating}]`).prop('checked', true);
     console.log(thisID);
 });
-
+//Submits user rating edit
 $(document).on("click", ".submit-edit", function(){
     let editRating = $(`input[name="editRating"]:checked`).val();
     console.log(editRating)
@@ -193,7 +200,7 @@ $(document).on("click", ".submit-edit", function(){
     $("#ratingSelect").val('default');
     $("#genreSelect").val('default');
 });
-
+//Triggers alert to user if for deletion
 $(document).on("click", ".delete", function(){
     let response = confirm("Are you sure want to?");
     if (response) {
