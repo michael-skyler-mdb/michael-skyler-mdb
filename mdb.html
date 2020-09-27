@@ -10,31 +10,12 @@
     <link rel="stylesheet" href="css/loading-icon.css">
 </head>
 <body>
-
-<h2 class="bg-dark display-4 text-white">My Movie List</h2>
 <div class="container-fluid">
-    <div class="text-white">
-        <h3 class="mt-4 mb-3">Filter Movies</h3>
-        <h5>Title:</h5>
-        <h5>Genre:</h5>
-        <div class="form-group">
-            <label for="ratingSelect">Rating:</label>
-            <select class="form-control" id="ratingSelect" style="width: 5em;">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </div>
-    </div>
-
-    <div>
-    </div>
-    <hr>
-    <div id="add-form">
+<div class="bg-dark d-flex justify-content-between row">
+    <span class="display-4 text-white" id="title">My Movie List</span>
+    <span id="add-form">
         <!--   Button to trigger the Add Movie modal     -->
-        <button type="button" class="btn btn-success btn-lg my-3 text-white" data-toggle="modal" data-target="#addModal" id="addMovieButton">Add New Movie</button>
+        <button type="button" class="btn btn-success btn-lg mx-2 mt-2 text-white" data-toggle="modal" data-target="#addModal" id="addMovieButton">Add New Movie</button>
 
         <!--   Add Movie Modal     -->
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -71,7 +52,42 @@
                 </div>
             </div>
         </div>
-    </div>
+    </span>
+</div>
+    <div class="text-white">
+        <h3 class="mt-4 mb-3">Filter Movies</h3>
+        <span>Title: </span> <input type="text" placeholder="Enter Title" id="titleSelect"></div>
+        <div class="form-group">
+            <label for="genreSelect" class="text-white">Genre:</label>
+            <select class="form-control" id="genreSelect" style="width: 13em;">
+                <option selected value="default">Select a Genre</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Sci-Fi">Sci-fi</option>
+                <option value="Horror">Horror</option>
+                <option value="Romance">Romance</option>
+                <option value="Action">Action</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Drama">Drama</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Crime">Crime</option>
+                <option value="Animation">Animation</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Comedy-Romance">Comedy-Romance</option>
+                <option value="Action-Comedy">Action-Comedy</option>
+                <option value="Superhero">Superhero</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ratingSelect" class="text-white">Rating:</label>
+            <select class="form-control" id="ratingSelect" style="width: 5em;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
     <hr>
 
     <div id="movie-list" class="row row-col-1 row-col-md-3 d-flex justify-content-around justify-content-md-center"><div class="loader"></div></div>
@@ -120,7 +136,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
