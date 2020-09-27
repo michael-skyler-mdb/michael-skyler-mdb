@@ -54,11 +54,17 @@
         </div>
     </span>
 </div>
-    <div class="text-white">
-        <h3 class="mt-4 mb-3">Filter Movies</h3>
-        <span>Title: </span> <input type="text" placeholder="Enter Title" id="titleSelect"></div>
-        <div class="form-group">
-            <label for="genreSelect" class="text-white">Genre:</label>
+    <h4 class="text-white mx-md-2">Filter Movies</h4>
+    <form class="text-white d-flex align-items-center flex-wrap">
+
+        <div class="d-flex align-items-center mb-1">
+            <label class="mx-md-2" for="titleSelect">Title: </label>
+            <input type="text" placeholder="Enter Title" id="titleSelect">
+        </div>
+
+
+        <div class="d-flex align-items-center mb-1">
+            <label for="genreSelect" class="text-white mx-md-2">Genre:</label>
             <select class="form-control" id="genreSelect" style="width: 13em;">
                 <option selected value="default">Select a Genre</option>
                 <option value="Comedy">Comedy</option>
@@ -78,9 +84,12 @@
                 <option value="Superhero">Superhero</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="ratingSelect" class="text-white">Rating:</label>
+
+
+        <div class="d-flex align-items-center p-1">
+            <label for="ratingSelect" class="text-white mx-md-2">Rating:</label>
             <select class="form-control" id="ratingSelect" style="width: 5em;">
+                <option value="default" selected>*</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -88,6 +97,9 @@
                 <option value="5">5</option>
             </select>
         </div>
+
+    </form>
+
     <hr>
 
     <div id="movie-list" class="row row-col-1 row-col-md-3 d-flex justify-content-around justify-content-md-center"><div class="loader"></div></div>

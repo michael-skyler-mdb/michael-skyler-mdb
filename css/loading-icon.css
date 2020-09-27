@@ -64,6 +64,9 @@ body {
     font-family: 'Montserrat Subrayada', sans-serif!important;
 }
 
+form h4 {
+    margin-bottom: 0;
+}
 
 
 .movie-card {

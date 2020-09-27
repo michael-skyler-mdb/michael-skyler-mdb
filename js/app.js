@@ -86,7 +86,7 @@ function displayUpdate () {
         // if (movie.title.includes(title) && (movie.genre.includes(genre) || $('#genreSelect').val() === "default")) {
         //     displayArray.push(movie);
         // }
-        if (movieTitle.includes(entertedTitle.toLowerCase()) && (movie.genre.includes(genre) || $('#genreSelect').val() === "default") && parseInt(movie.rating) >= movieRating ) {
+        if (movieTitle.includes(entertedTitle.toLowerCase()) && (movie.genre.includes(genre) || $('#genreSelect').val() === "default") && (parseInt(movie.rating) == movieRating || $("#ratingSelect").val() ===  'default')) {
             displayArray.push(movie);
         }
     }
